@@ -19,11 +19,7 @@ jobs:
     needs: build
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Log in to Render
-        run: render login --accessToken=${{ secrets.RENDER_TOKEN }}
-
       - name: Deploy to Render
-        run: render up --name=${{ secrets.RENDER_SERVICE_NAME }} --docker-image=armagandalkiran/docker-react
+        run: |
+          curl -X POST https://render.com/api/v1/services/your-service-id/deploy \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
